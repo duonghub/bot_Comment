@@ -20,9 +20,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 const tiktokUsername = 'gamedchoi'; 
 const connection = new TikTokLiveConnection(tiktokUsername);
 
-connection.connect().then(state => {
-    console.log(`Đã kết nối tới live: ${state.roomId}`);
-}).catch(err => console.error('Lỗi kết nối:', err));
+// --- KẾT NỐI VỚI CƠ CHẾ TỰ HỒI SINH ---
+function connectWithRetry() {
+    connection.connect().then(state => {
+        console.log(`Đã kết nối tới live: ${state.roomId}`);
+    }).catch(err => {
+        console.error('Lỗi kết nối, thử lại sau 30s:', err.message);
+        // Tự động gọi lại chính hàm này sau 30 giây nếu bị lỗi
+        setTimeout(connectWithRetry, 30000); 
+    });
+}
+
+// Gọi hàm lần đầu tiên để bot bắt đầu chạy
+connectWithRetry();
 
 // Khi có comment, bắn tin nhắn qua Socket.io
 connection.on(WebcastEvent.CHAT, data => {

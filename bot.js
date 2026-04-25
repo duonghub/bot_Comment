@@ -1,8 +1,22 @@
 import { TikTokLiveConnection, WebcastEvent } from 'tiktok-live-connector';
 import gTTS from 'gtts';
-import sound from 'sound-play'; // Dùng thư viện mới này
 import fs from 'fs';
 import path from 'path';
+import express from 'express'; // Thêm dòng này
+
+// --- TẠO WEB SERVER ĐỂ RENDER KHÔNG TẮT BOT ---
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('Bot is running!');
+});
+
+app.listen(port, () => {
+    console.log(`Server đang lắng nghe cổng ${port}`);
+});
+
+// --- PHẦN BOT CŨ CỦA BẠN GIỮ NGUYÊN ---//
 
 const tiktokUsername = 'gamedchoi'; // Xóa dấu @ đi nhé
 const connection = new TikTokLiveConnection(tiktokUsername);

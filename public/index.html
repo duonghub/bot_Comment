@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('new_comment', (comment) => {
+            // Trình duyệt tự đọc comment
+            const utterance = new SpeechSynthesisUtterance(comment);
+            utterance.lang = 'vi-VN';
+            window.speechSynthesis.speak(utterance);
+        });
+    </script>
+</body>
+</html>

@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --- KẾT NỐI TIKTOK ---
-const tiktokUsername = 'gamedchoi'; 
+const tiktokUsername = 'mitdu2003'; 
 const connection = new TikTokLiveConnection(tiktokUsername);
 
 // --- KẾT NỐI VỚI CƠ CHẾ TỰ HỒI SINH ---
